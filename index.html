@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dollar Counter Game</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .container {
+      position: relative;
+      text-align: center;
+    }
+
+    .image-btn {
+      cursor: pointer;
+      width: 180px;
+      height: 180px;
+      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVQGdMjTo098meAJTnqOSTKzT62sOcK_7ChQ&s');
+      background-size: cover;
+      background-position: center;
+      border: 6px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, border 0.1s ease;
+    }
+
+    .image-btn:active {
+      transform: scale(0.99); /* Bosilganda kichrayish */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .image-btn:hover {
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .dollar {
+      position: absolute;
+      font-size: 2.5rem;
+      color: #2ecc71;
+      opacity: 0;
+      animation: floatUp 1s forwards;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(0, -120px);
+      }
+    }
+
+    .count, .total {
+      margin-top: 20px;
+      font-size: 1.8rem;
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .count:hover, .total:hover {
+      background: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .image-btn {
+        width: 160px;
+        height: 160px;
+      }
+
+      .dollar {
+        font-size: 2rem;
+      }
+
+      .count, .total {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (min-width: 600px) and (max-width: 1024px) {
+      .image-btn {
+        width: 180px;
+        height: 180px;
+      }
+
+      .dollar {
+        font-size: 2.2rem;
+      }
+
+      .count, .total {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      h1 {
+        font-size: 3rem;
+      }
+
+      .image-btn {
+        width: 200px;
+        height: 200px;
+      }
+
+      .dollar {
+        font-size: 2.5rem;
+      }
+
+      .count, .total {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Dollar Counter Game</h1>
+  <div class="total" id="totalClicks">Total Clicks: 0</div>
+  
+  <div class="container">
+    <button class="image-btn" id="imageBtn"></button>
+    <div class="dollar" id="dollar">$</div>
+  </div>
+  <div class="count" id="countDisplay">Total: 0$</div>
+
+  <script>
+    let count = 0;
+    let clicks = 0;
+    const imageBtn = document.getElementById('imageBtn');
+    const dollarSign = document.getElementById('dollar');
+    const countDisplay = document.getElementById('countDisplay');
+    const totalClicks = document.getElementById('totalClicks');
+
+    imageBtn.addEventListener('click', () => {
+      clicks++;
+      count++;
+      let dollars = Math.floor(count / 20); // Har 20 ta bosish = 1$
+
+      // $ belgisi rasmning tasodifiy joyidan chiqadi
+      const randomX = Math.random() * (imageBtn.offsetWidth - 30);
+      const randomY = Math.random() * (imageBtn.offsetHeight - 30);
+      dollarSign.style.left = `${randomX}px`;
+      dollarSign.style.top = `${randomY}px`;
+
+      // Animatsiya qayta ishlashi uchun yangilash
+      dollarSign.style.opacity = 1;
+      dollarSign.style.animation = 'none';
+      void dollarSign.offsetWidth; 
+      dollarSign.style.animation = null;
+
+      // Dollar miqdorini ko'rsatish
+      countDisplay.textContent = `Total: ${dollars}$`;
+      totalClicks.textContent = `Total Clicks: ${clicks}`;
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+<!-- https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVQGdMjTo098meAJTnqOSTKzT62sOcK_7ChQ&s -->
